@@ -1,15 +1,16 @@
 {
   "name": "arabic-learning-universe",
   "private": true,
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b --pretty",
-    "audio:generate": "python tools/audio-generator/generate_mp3.py",
-    "audio:generate:force": "python tools/audio-generator/generate_mp3.py --force"
+    "audio:generate": "npm run audio:manifest && python tools/audio-generator/generate_mp3.py",
+    "audio:generate:force": "npm run audio:manifest && python tools/audio-generator/generate_mp3.py --force",
+    "audio:manifest": "node tools/audio-generator/build_audio_manifest.cjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.0",

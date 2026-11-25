@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BookOpen, Check, CheckCircle2, ChevronRight, Headphones, Languages, LockKeyhole, Star, X } from 'lucide-react'
 import AudioPlayer from './AudioPlayer'
+import { getLessonAudioUrl } from '../lib/audioAssets'
 import QuizPanel from './QuizPanel'
 import type { DifficultyLevel, GradeLevel, Lesson, LessonTab } from '../types'
 import { difficultyLabels, difficultyOrder } from '../types'
@@ -90,7 +91,7 @@ export default function LessonModal({ lesson, grade, completed, passedLevels, on
               <div className="section-eyebrow">MAHĀRAH AL-ISTIMĀ’ · KETERAMPILAN MENYIMAK</div>
               <h3>اِسْتَمِعْ إِلَى النَّصِّ</h3>
               <p className="section-description">Dengarkan narasi Bahasa Arab yang membacakan teks materi. Coba menyimak tanpa membuka transkrip terlebih dahulu, lalu putar kembali untuk memeriksa pemahaman.</p>
-              <AudioPlayer text={content.audioText} audioUrl={grade === 'SMP' ? lesson.audioSmpUrl : lesson.audioSmaUrl} />
+              <AudioPlayer text={content.audioText} audioUrl={(grade === 'SMP' ? lesson.audioSmpUrl : lesson.audioSmaUrl) || getLessonAudioUrl(lesson.id, grade)} />
               <div className="listening-tip"><Headphones size={17} /><span>Dengarkan satu kali tanpa membaca transkrip. Setelah itu, putar kembali untuk memeriksa pemahamanmu.</span></div>
               <div className="transcript-area">
                 <button className="transcript-toggle" onClick={() => setShowTranscript((value) => !value)} type="button">{showTranscript ? 'Sembunyikan transkrip' : 'Tampilkan transkrip audio'}</button>
@@ -160,7 +161,7 @@ export default function LessonModal({ lesson, grade, completed, passedLevels, on
         </div>
         <footer className="lesson-modal-footer">
           <span><span className="footer-dot" /> Materi {grade === 'SMP' ? 'SMP / MTs' : 'SMA / MA'} · {lesson.name}</span>
-          <span>Arabic Learning City · v0.4</span>
+          <span>Arabic Learning City · v0.6</span>
         </footer>
       </section>
     </div>

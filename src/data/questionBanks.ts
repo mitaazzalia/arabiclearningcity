@@ -1,4 +1,5 @@
 import type { DifficultyQuestionBank, GradeLevel, Lesson, QuizQuestion } from '../types'
+import { getLessonAudioUrl } from '../lib/audioAssets'
 
 function unique(values: string[], correct: string, count = 2): string[] {
   const candidates = [...new Set(values.filter((value) => value && value !== correct))]
@@ -138,8 +139,9 @@ export function buildQuestionBank(lesson: Lesson, grade: GradeLevel, allLessons:
   ))
 
   const audioUrl = grade === 'SMP' ? lesson.audioSmpUrl : lesson.audioSmaUrl
+  const resolvedAudioUrl = audioUrl || getLessonAudioUrl(lesson.id, grade)
   const attachListeningAudio = (items: QuizQuestion[]) => items.map((item) => item.source === 'istima'
-    ? { ...item, audioText: content.audioText, audioUrl: audioUrl ?? null }
+    ? { ...item, audioText: content.audioText, audioUrl: resolvedAudioUrl }
     : item)
 
   return {

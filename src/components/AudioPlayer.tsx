@@ -35,6 +35,8 @@ export default function AudioPlayer({ text, audioUrl, compact = false }: AudioPl
     if (audio) {
       audio.pause()
       audio.playbackRate = speed === 'slow' ? 0.75 : 1
+      // Keep the voice pitch as natural as the browser allows when slowing playback.
+      if ('preservesPitch' in audio) audio.preservesPitch = true
       audio.volume = volume
     }
   }, [speed, volume, audioUrl])
@@ -53,35 +55,21 @@ export default function AudioPlayer({ text, audioUrl, compact = false }: AudioPl
     () => voices.find((voice) => voice.lang.toLowerCase().startsWith('ar')),
     [voices],
   )
-  const canPlay = Boolean(audioUrl && !sourceError) || Boolean(arabicVoice)
-  const sourceLabel = audioUrl && !sourceError
-    ? 'Rekaman MP3'
+  const hasMp3 = Boolean(audioUrl && !sourceError)
+  const canPlay = hasMp3 || Boolean(arabicVoice)
+  const sourceLabel = hasMp3
+    ? 'Rekaman MP3 Bahasa Arab'
     : arabicVoice
       ? `Pratinjau suara perangkat · ${arabicVoice.name}`
-      : 'Audio belum tersedia'
+      : 'MP3 belum dibuat'
 
-  const play = async () => {
-    setMessage('')
-    if (audioUrl && audioRef.current && !sourceError) {
-      audioRef.current.playbackRate = speed === 'slow' ? 0.75 : 1
-      audioRef.current.volume = volume
-      try {
-        await audioRef.current.play()
-        setIsPlaying(true)
-      } catch {
-        setIsPlaying(false)
-        setSourceError(true)
-        setMessage('MP3 tidak dapat diputar. Jika suara Bahasa Arab tersedia di perangkat, tombol putar dapat menggunakan pratinjau suara perangkat.')
-      }
-      return
-    }
-
+  const playDeviceVoice = () => {
     if (!('speechSynthesis' in window)) {
-      setMessage('Browser ini tidak mendukung suara otomatis. Hubungkan rekaman MP3 Bahasa Arab untuk materi ini.')
+      setMessage('Browser tidak mendukung suara otomatis. Buat MP3 melalui JALANKAN_GENERATOR_AUDIO.bat di folder proyek.')
       return
     }
     if (!arabicVoice) {
-      setMessage('Perangkat ini tidak menyediakan suara Bahasa Arab. Hubungkan rekaman MP3 agar audio dapat didengarkan.')
+      setMessage('File MP3 untuk materi ini belum tersedia. Jalankan JALANKAN_GENERATOR_AUDIO.bat di folder proyek agar audio bacaan dan soal menyimak dibuat otomatis.')
       return
     }
 
@@ -97,9 +85,30 @@ export default function AudioPlayer({ text, audioUrl, compact = false }: AudioPl
     utterance.onend = () => setIsPlaying(false)
     utterance.onerror = () => {
       setIsPlaying(false)
-      setMessage('Browser gagal menjalankan pratinjau suara. Gunakan rekaman MP3 untuk pemutaran yang lebih konsisten.')
+      setMessage('Suara perangkat gagal diputar. Buat atau periksa file MP3 materi ini.')
     }
     synth.speak(utterance)
+  }
+
+  const play = async () => {
+    setMessage('')
+    if (audioUrl && audioRef.current && !sourceError) {
+      audioRef.current.playbackRate = speed === 'slow' ? 0.75 : 1
+      if ('preservesPitch' in audioRef.current) audioRef.current.preservesPitch = true
+      audioRef.current.volume = volume
+      try {
+        await audioRef.current.play()
+        setIsPlaying(true)
+      } catch {
+        setIsPlaying(false)
+        setSourceError(true)
+        // If a local MP3 is missing, immediately try a device Arabic voice when available.
+        if (arabicVoice) playDeviceVoice()
+        else setMessage('File MP3 belum ditemukan. Jalankan JALANKAN_GENERATOR_AUDIO.bat di folder proyek untuk membuat audio seluruh materi dan soal istimā’.')
+      }
+      return
+    }
+    playDeviceVoice()
   }
 
   const pause = () => {
@@ -132,12 +141,16 @@ export default function AudioPlayer({ text, audioUrl, compact = false }: AudioPl
           onTimeUpdate={(event) => setCurrentTime(event.currentTarget.currentTime)}
           onEnded={() => setIsPlaying(false)}
           onPause={() => setIsPlaying(false)}
-          onError={() => { setIsPlaying(false); setSourceError(true); setMessage('Berkas MP3 tidak dapat dimuat. Periksa URL atau unggah ulang audio ke penyimpanan.') }}
+          onError={() => {
+            setIsPlaying(false)
+            setSourceError(true)
+            if (!arabicVoice) setMessage('MP3 materi ini belum tersedia. Jalankan JALANKAN_GENERATOR_AUDIO.bat agar audio bacaan dan soal menyimak dibuat otomatis.')
+          }}
         />
       )}
       <div className="audio-icon"><Headphones size={compact ? 18 : 22}/></div>
       <div className="audio-copy">
-        <strong>{compact ? 'Dengarkan audio' : 'Audio Bahasa Arab'}</strong>
+        <strong>{compact ? 'Dengarkan audio soal' : 'Audio Bahasa Arab'}</strong>
         <span>{sourceLabel}</span>
       </div>
       <button className="audio-play" onClick={isPlaying ? pause : play} type="button" aria-label={isPlaying ? 'Jeda audio' : 'Putar audio'} disabled={!canPlay}>
@@ -158,8 +171,8 @@ export default function AudioPlayer({ text, audioUrl, compact = false }: AudioPl
       <Volume2 className="audio-volume" size={16}/>
       <input className="audio-volume-range" type="range" min="0" max="1" step="0.05" value={volume} onChange={(event) => setVolume(Number(event.target.value))} aria-label="Atur volume" />
       {message && <p className="audio-message" role="status"><AlertCircle size={14}/>{message}</p>}
-      {!canPlay && !message && <p className="audio-message" role="status"><AlertCircle size={14}/>Rekaman MP3 belum dihubungkan dan perangkat tidak memiliki suara Bahasa Arab.</p>}
-      {canPlay && !audioUrl && <p className="audio-hint"><CheckCircle2 size={13}/> Suara perangkat tersedia sebagai pratinjau. Rekaman MP3 tetap disarankan untuk pembelajaran kelas.</p>}
+      {!canPlay && !message && <p className="audio-message" role="status"><AlertCircle size={14}/>Audio untuk materi dan soal ini belum dibuat. Jalankan JALANKAN_GENERATOR_AUDIO.bat untuk menghasilkan MP3 seluruh lokasi dan jenjang.</p>}
+      {canPlay && !hasMp3 && <p className="audio-hint"><CheckCircle2 size={13}/> Suara perangkat tersedia sebagai pratinjau. MP3 lokal akan digunakan setelah generator dijalankan.</p>}
     </div>
   )
 }

@@ -151,7 +151,7 @@ function App() {
             <div className="mission-track"><i style={{ width: `${progress}%` }}/></div>
             <small>{completedIds.length} dari {lessons.length} materi tuntas</small>
           </div>
-          <div className="city-data-status"><i/> {dataSource === 'supabase' ? 'Terhubung ke Supabase' : 'Mode demo lokal'} · v0.5</div>
+          <div className="city-data-status"><i/> {dataSource === 'supabase' ? 'Terhubung ke Supabase' : 'Mode demo lokal'} · v0.6</div>
         </div>
       </aside>
 

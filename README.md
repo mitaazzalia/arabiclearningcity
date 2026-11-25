@@ -1,8 +1,8 @@
-# Arabic Learning City v0.5.0
+# Arabic Learning City v0.6.0
 
 Prototipe website pembelajaran Bahasa Arab dengan peta kota ilustratif yang dapat dijelajahi. Siswa memilih kawasan, masuk ke lokasi, membaca teks Arab, menyimak narasi, mempelajari mufradat, dan mengerjakan evaluasi bertingkat.
 
-## Penyempurnaan v0.5.0
+## Penyempurnaan v0.5.0 dan perbaikan audio v0.6.0
 
 ### Perluasan kawasan rumah
 - Kawasan permukiman kini memiliki 12 tempat belajar: rumah keluarga, ruang keluarga, dapur, kamar tidur, kamar mandi, ruang makan, ruang belajar, garasi, taman rumah, ruang cuci, balkon, dan lorong rumah.
@@ -61,25 +61,45 @@ npm run build
 npm run preview
 ```
 
-## Generator MP3 Bahasa Arab (sudah digabung)
+## Generator MP3 Bahasa Arab untuk materi dan soal Istimā’
 
-Proyek ini sekarang menyertakan generator audio sederhana di `tools/audio-generator/`. Generator menggunakan `gTTS` melalui layanan Google Translate TTS (bukan Google Cloud TTS), dengan satu suara Arab otomatis. Generator tidak menyediakan pilihan suara karakter Arthur, Dylan, Zelda, atau Brielle.
+Versi 0.6.0 memperbaiki hubungan antara pemutar audio, materi Istimā’, dan soal kuis berbasis audio. Sebelumnya, soal `istima` hanya membawa teks audio; `audioUrl` sering kosong. Selain itu, generator lama hanya membuat tiga MP3 contoh yang tidak digunakan oleh URL materi.
 
-**Cara paling mudah di Windows:** pastikan Python 3 dan koneksi internet tersedia, lalu klik dua kali `JALANKAN_GENERATOR_AUDIO.bat` dari folder utama proyek. MP3 akan dibuat ke `public/audio/generated/`. Buka `http://localhost:5173/audio-demo.html` untuk mencoba tiga sampel.
+Sekarang:
+- Setiap materi SMP dan SMA memperoleh URL MP3 lokal yang konsisten.
+- Semua soal dengan sumber `istima` otomatis memakai audio lokasi dan jenjang yang sama.
+- Generator membaca data aktual dari 37 lokasi dan membuat manifest **74 MP3** (37 lokasi × 2 jenjang).
+- Audio yang sama dipakai bersama oleh tab Istimā’ dan soal-soal menyimak pada lokasi tersebut, sehingga tidak membuat salinan MP3 untuk setiap soal.
+- Jika file MP3 belum dibuat, pemutar memberi petunjuk menjalankan generator, bukan hanya memberi peringatan bahwa perangkat tidak memiliki suara Arab.
 
-Untuk mengedit teks yang dibuat, ubah `tools/audio-generator/audio_texts.json`. Lihat `tools/audio-generator/README.md` untuk petunjuk lengkap. File MP3 tidak disertakan sebelum generator dijalankan; arsip ini berisi skrip pembuatnya.
+### Cara paling mudah di Windows
 
-## Audio Bahasa Arab: hal yang perlu diketahui
+1. Pastikan Node.js, Python 3, dan koneksi internet tersedia.
+2. Dari folder utama proyek, jalankan `npm install` satu kali.
+3. Klik dua kali `JALANKAN_GENERATOR_AUDIO.bat`.
+4. Tunggu generator menyusun manifest dan membuat 74 MP3. Proses pertama dapat memerlukan beberapa menit.
+5. Jalankan atau refresh website. Coba tab Istimā’ dan soal yang berlabel Istimā’.
 
-File MP3 penutur Bahasa Arab **belum disertakan** dalam arsip. Web Speech API hanya menjadi pratinjau dan ketersediaannya bergantung pada suara yang terpasang di perangkat. Untuk penggunaan pembelajaran yang konsisten, gunakan rekaman MP3 yang telah ditinjau pelafalannya.
+MP3 disimpan di `public/audio/generated/`. Setelah file berhasil dibuat, sertakan folder tersebut ketika mengunggah proyek ke GitHub agar Vercel juga dapat menyajikan audio.
 
-Skema Supabase sudah menyiapkan bucket publik `arabic-audio`. Alur pemasangan rekaman:
+### Menjalankan manual
 
-1. Buat rekaman MP3 untuk setiap kombinasi lokasi dan jenjang.
-2. Gunakan `supabase/audio-manifest.csv` sebagai daftar rekaman yang perlu disiapkan, lalu unggah ke bucket `arabic-audio`.
-3. Salin URL publik setiap file.
-4. Isi kolom `audio_smp_url` dan `audio_sma_url` pada baris materi terkait di tabel `public.lessons`.
-5. Pastikan URL dapat dibuka dan audio terdengar pada desktop serta ponsel.
+```bash
+npm install
+npm run audio:manifest
+python -m pip install -r tools/audio-generator/requirements.txt
+python tools/audio-generator/generate_mp3.py
+```
+
+Untuk membuat ulang seluruh audio:
+
+```bash
+python tools/audio-generator/generate_mp3.py --force
+```
+
+Generator menggunakan `gTTS` melalui layanan Google Translate TTS. Ini **bukan Google Cloud TTS** dan hanya menggunakan satu suara Arab otomatis; tidak dapat memilih Arthur, Dylan, Zelda, atau Brielle. Audio disimpan pada kecepatan normal; tombol 0,75× memperlambat pemutaran di browser. Guru Bahasa Arab tetap perlu meninjau pelafalan dan kesesuaian audio sebelum digunakan sebagai penilaian.
+
+**Penting:** ZIP berisi generator dan manifest teks, bukan 74 MP3 yang sudah jadi. File MP3 baru terbentuk setelah generator dijalankan pada komputer yang terhubung internet. Jika sebagian gagal karena koneksi, jalankan kembali; file yang sudah ada akan dilewati.
 
 ## Konfigurasi Supabase
 
@@ -113,6 +133,7 @@ arabic-learning-universe/
 │   │   ├── questionBanks.ts
 │   │   └── readingExtensions.ts
 │   ├── lib/
+│   │   ├── audioAssets.ts
 │   │   ├── lessonRepository.ts
 │   │   └── supabase.ts
 │   ├── App.tsx
