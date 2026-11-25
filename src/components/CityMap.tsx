@@ -123,7 +123,7 @@ function Building({ x, y, label, arabic, districtId, variant, onSelect }: Buildi
 }
 
 function TreeShape({ x, y }: { x: number; y: number }) {
-  return <g transform={`translate(${x} ${y})`}><path d="M-3 5 L-5 38 H5 L3 5Z" fill="#987452" stroke="none"/><circle cx="0" cy="-3" r="19" fill="#a5cd83"/><circle cx="-12" cy="7" r="12" fill="#8dbd79"/><circle cx="12" cy="7" r="12" fill="#b6d58e"/></g>
+  return <g transform={`translate(${x} ${y})`}><path d="M-3 5 L-5 38 H5 L3 5Z" fill="#987452" stroke="none"/><circle cx="0" cy="-3" r="19" fill="#22C55E"/><circle cx="-12" cy="7" r="12" fill="#16A34A"/><circle cx="12" cy="7" r="12" fill="#86EFAC"/></g>
 }
 
 function Tree({ x, y, scale = 1 }: { x: number; y: number; scale?: number }) {
@@ -224,19 +224,19 @@ export default function CityMap({ onSelectDistrict }: CityMapProps) {
         style={mapStyle}
       >
         <defs>
-          <pattern id="grassDots" width="42" height="42" patternUnits="userSpaceOnUse"><circle cx="8" cy="9" r="1.5" fill="#b2d39e" opacity=".5"/><circle cx="31" cy="29" r="1.2" fill="#fff" opacity=".7"/></pattern>
+          <pattern id="grassDots" width="42" height="42" patternUnits="userSpaceOnUse"><circle cx="8" cy="9" r="1.5" fill="#65A30D" opacity=".5"/><circle cx="31" cy="29" r="1.2" fill="#fff" opacity=".7"/></pattern>
           <pattern id="roadTexture" width="36" height="36" patternUnits="userSpaceOnUse"><circle cx="9" cy="11" r="1" fill="#fff" opacity=".1"/><circle cx="27" cy="25" r=".8" fill="#59625d" opacity=".08"/></pattern>
         </defs>
-        <rect width="1200" height="760" fill="#e5f0dc" />
+        <rect width="1200" height="760" fill="#C9F2A4" />
         <rect width="1200" height="760" fill="url(#grassDots)" />
-        <path d="M-60 270 C180 170 355 205 500 285 S825 385 1260 220" fill="none" stroke="#c8c2b1" strokeWidth="124" strokeLinecap="round" />
-        <path d="M-60 270 C180 170 355 205 500 285 S825 385 1260 220" fill="none" stroke="#858b86" strokeWidth="101" strokeLinecap="round" />
+        <path d="M-60 270 C180 170 355 205 500 285 S825 385 1260 220" fill="none" stroke="#CBD5E1" strokeWidth="124" strokeLinecap="round" />
+        <path d="M-60 270 C180 170 355 205 500 285 S825 385 1260 220" fill="none" stroke="#475569" strokeWidth="101" strokeLinecap="round" />
         <path d="M-60 270 C180 170 355 205 500 285 S825 385 1260 220" fill="none" stroke="url(#roadTexture)" strokeWidth="99" strokeLinecap="round" />
-        <path d="M65 800 C180 620 325 530 510 520 S865 560 1230 775" fill="none" stroke="#c8c2b1" strokeWidth="124" strokeLinecap="round" />
-        <path d="M65 800 C180 620 325 530 510 520 S865 560 1230 775" fill="none" stroke="#858b86" strokeWidth="101" strokeLinecap="round" />
+        <path d="M65 800 C180 620 325 530 510 520 S865 560 1230 775" fill="none" stroke="#CBD5E1" strokeWidth="124" strokeLinecap="round" />
+        <path d="M65 800 C180 620 325 530 510 520 S865 560 1230 775" fill="none" stroke="#475569" strokeWidth="101" strokeLinecap="round" />
         <path d="M65 800 C180 620 325 530 510 520 S865 560 1230 775" fill="none" stroke="url(#roadTexture)" strokeWidth="99" strokeLinecap="round" />
-        <path d="M600 -55 C570 130 650 270 630 410 S620 650 690 820" fill="none" stroke="#c8c2b1" strokeWidth="100" strokeLinecap="round" />
-        <path d="M600 -55 C570 130 650 270 630 410 S620 650 690 820" fill="none" stroke="#858b86" strokeWidth="79" strokeLinecap="round" />
+        <path d="M600 -55 C570 130 650 270 630 410 S620 650 690 820" fill="none" stroke="#CBD5E1" strokeWidth="100" strokeLinecap="round" />
+        <path d="M600 -55 C570 130 650 270 630 410 S620 650 690 820" fill="none" stroke="#475569" strokeWidth="79" strokeLinecap="round" />
         <path d="M600 -55 C570 130 650 270 630 410 S620 650 690 820" fill="none" stroke="#fff" strokeWidth="3" strokeDasharray="23 25" opacity=".65" />
         <path d="M0 0 H1200 V760 H0Z" fill="none" stroke="#fff" strokeWidth="13" opacity=".5" />
         {/* Crosswalks and road markings */}
@@ -252,7 +252,7 @@ export default function CityMap({ onSelectDistrict }: CityMapProps) {
         </g>
         {/* Small town square */}
         <g>
-          <path d="M430 345 C460 305 520 295 560 320 C600 290 675 305 694 348 C731 380 713 425 670 439 C628 465 548 453 510 435 C462 445 414 403 430 345Z" fill="#b9dca4" stroke="#9bc78a" strokeWidth="3" />
+          <path d="M430 345 C460 305 520 295 560 320 C600 290 675 305 694 348 C731 380 713 425 670 439 C628 465 548 453 510 435 C462 445 414 403 430 345Z" fill="#86EFAC" stroke="#4ADE80" strokeWidth="3" />
           <path d="M460 360 C490 333 520 345 543 362 M590 337 C630 326 663 344 675 371" stroke="#fff" strokeWidth="4" strokeLinecap="round" fill="none" opacity=".7" />
           <Tree x={485} y={385} scale={.8}/><Tree x={655} y={400} scale={.8}/>
           <path d="M535 412 Q580 390 615 413" stroke="#fff" strokeWidth="4" fill="none" strokeLinecap="round" />

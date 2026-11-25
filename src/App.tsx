@@ -7,9 +7,11 @@ import {
 import type { LucideIcon } from 'lucide-react'
 import CityMap from './components/CityMap'
 import DistrictView from './components/DistrictView'
+import MufradatView from './components/MufradatView'
 import LessonModal from './components/LessonModal'
 import { cityDistricts, extraLessons, type CityArea, type DistrictId } from './data/cityData'
 import { additionalCityLessons } from './data/moreCityLessons'
+import { expandedCityLessons } from './data/expandedCityLessons'
 import { enrichLessons } from './data/lessonEnrichment'
 import { localLessons } from './data/lessons'
 import { attachQuestionBanks } from './data/questionBanks'
@@ -27,11 +29,11 @@ const districtIcons: Record<DistrictId, LucideIcon> = {
 
 function App() {
   const [grade, setGrade] = useState<GradeLevel>('SMP')
-  const [lessons, setLessons] = useState<Lesson[]>(() => attachQuestionBanks(enrichLessons([...localLessons, ...extraLessons, ...additionalCityLessons])))
+  const [lessons, setLessons] = useState<Lesson[]>(() => attachQuestionBanks(enrichLessons([...localLessons, ...extraLessons, ...additionalCityLessons, ...expandedCityLessons])))
   const [dataSource, setDataSource] = useState<'local' | 'supabase'>('local')
   const [activeDistrict, setActiveDistrict] = useState<DistrictId | null>(null)
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null)
-  const [currentView, setCurrentView] = useState<'city' | 'progress'>('city')
+  const [currentView, setCurrentView] = useState<'city' | 'progress' | 'dictionary'>('city')
   const [passedLevels, setPassedLevels] = useState<Record<string, DifficultyLevel[]>>(() => {
     try {
       const saved = window.localStorage.getItem('alu-city-v04-progress') ?? window.localStorage.getItem('alu-city-v03-progress')
@@ -49,7 +51,7 @@ function App() {
     let mounted = true
     loadLessons().then((result) => {
       if (!mounted) return
-      const allExtras = [...extraLessons, ...additionalCityLessons]
+      const allExtras = [...extraLessons, ...additionalCityLessons, ...expandedCityLessons]
       const merged = [...result.lessons, ...allExtras.filter((extra) => !result.lessons.some((lesson) => lesson.id === extra.id))]
       setLessons(attachQuestionBanks(enrichLessons(merged)))
       setDataSource(result.source)
@@ -113,6 +115,12 @@ function App() {
     setMobileNavOpen(false)
   }
 
+  const goToDictionary = () => {
+    setCurrentView('dictionary')
+    setActiveDistrict(null)
+    setMobileNavOpen(false)
+  }
+
   const activeDistrictData = cityDistricts.find((district) => district.id === activeDistrict) ?? null
 
   return (
@@ -127,6 +135,7 @@ function App() {
         <nav className="city-nav">
           <button className={currentView === 'city' && !activeDistrict ? 'active' : ''} onClick={goToCity} type="button"><MapPinned size={18}/><span>Peta Kota</span><ChevronRight size={15}/></button>
           <button className={currentView === 'progress' ? 'active' : ''} onClick={goToProgress} type="button"><Trophy size={18}/><span>Progres Belajar</span><ChevronRight size={15}/></button>
+          <button className={currentView === 'dictionary' ? 'active' : ''} onClick={goToDictionary} type="button"><BookOpen size={18}/><span>Kamus Mufradat</span><ChevronRight size={15}/></button>
         </nav>
         <div className="city-sidebar-caption">JELAJAHI KAWASAN</div>
         <div className="city-sidebar-districts">
@@ -142,7 +151,7 @@ function App() {
             <div className="mission-track"><i style={{ width: `${progress}%` }}/></div>
             <small>{completedIds.length} dari {lessons.length} materi tuntas</small>
           </div>
-          <div className="city-data-status"><i/> {dataSource === 'supabase' ? 'Terhubung ke Supabase' : 'Mode demo lokal'} · v0.4</div>
+          <div className="city-data-status"><i/> {dataSource === 'supabase' ? 'Terhubung ke Supabase' : 'Mode demo lokal'} · v0.5</div>
         </div>
       </aside>
 
@@ -151,7 +160,7 @@ function App() {
       <main className="city-main">
         <header className="city-topbar">
           <button className="city-icon-button mobile-menu" onClick={() => setMobileNavOpen(true)} type="button" aria-label="Buka menu"><Menu size={20}/></button>
-          <div className="city-breadcrumb"><span>Kota Bahasa Arab</span>{activeDistrictData && <><ChevronRight size={14}/><strong>{activeDistrictData.name}</strong></>}</div>
+          <div className="city-breadcrumb"><span>Kota Bahasa Arab</span>{activeDistrictData && <><ChevronRight size={14}/><strong>{activeDistrictData.name}</strong></>}{currentView === 'dictionary' && <><ChevronRight size={14}/><strong>Kamus Mufradat</strong></>}{currentView === 'progress' && <><ChevronRight size={14}/><strong>Progres Belajar</strong></>}</div>
           <div className="city-top-actions">
             <div className="city-grade-switch" aria-label="Pilih jenjang belajar">
               <button className={grade === 'SMP' ? 'selected' : ''} onClick={() => setGrade('SMP')} type="button">SMP / MTs</button>
@@ -163,7 +172,9 @@ function App() {
         </header>
 
         <div className="city-page-content">
-          {currentView === 'progress' ? (
+          {currentView === 'dictionary' ? (
+            <MufradatView/>
+          ) : currentView === 'progress' ? (
             <ProgressView lessons={lessons} completedIds={completedIds} progress={progress} xp={xp} onSelect={(lesson) => setSelectedLesson(lesson)}/>
           ) : activeDistrictData ? (
             <DistrictView district={activeDistrictData} lessons={lessons} completedIds={completedIds} onBack={() => setActiveDistrict(null)} onSelectArea={handleSelectArea}/>
@@ -178,7 +189,7 @@ function App() {
                 <div className="city-streak"><span><Flame size={18} fill="currentColor"/></span><div><strong>Mulai hari ini</strong><small>Satu materi, satu kemajuan</small></div></div>
               </section>
               <section className="city-map-section">
-                <div className="city-section-heading"><div><span className="section-tag">PETA INTERAKTIF</span><h2>Jelajahi seluruh kota</h2><p>Pilih bangunan untuk memperbesar tampilan dan masuk ke kawasannya.</p></div><div className="map-location-count"><Map size={17}/><strong>6 kawasan</strong><span>·</span><span>{lessons.length} materi</span></div></div>
+                <div className="city-section-heading"><div><span className="section-tag">PETA INTERAKTIF</span><h2>Jelajahi seluruh kota</h2><p>Pilih bangunan untuk memperbesar tampilan dan masuk ke kawasannya.</p></div><div className="map-location-count"><Map size={17}/><strong>{cityDistricts.length} kawasan</strong><span>·</span><span>{cityDistricts.reduce((total, district) => total + district.areas.length, 0)} tempat</span></div></div>
                 <CityMap onSelectDistrict={handleSelectDistrict}/>
               </section>
               <section className="city-quick-districts">

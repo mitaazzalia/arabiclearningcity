@@ -8,7 +8,7 @@ export interface CityArea {
   arabicName: string
   description: string
   lessonId: string
-  icon: 'school' | 'classroom' | 'canteen' | 'library' | 'mosque' | 'playground' | 'airport' | 'train' | 'bus' | 'hospital' | 'pharmacy' | 'clinic' | 'house' | 'living' | 'kitchen' | 'market' | 'supermarket' | 'restaurant' | 'park' | 'cinema' | 'beach'
+  icon: 'school' | 'classroom' | 'canteen' | 'library' | 'mosque' | 'playground' | 'airport' | 'train' | 'bus' | 'hospital' | 'pharmacy' | 'clinic' | 'house' | 'living' | 'kitchen' | 'market' | 'supermarket' | 'restaurant' | 'park' | 'cinema' | 'beach' | 'bedroom' | 'bathroom' | 'dining' | 'study' | 'garage' | 'garden' | 'laundry' | 'balcony' | 'hallway' | 'taxi' | 'port' | 'busstop' | 'parking' | 'fuel' | 'bridge' | 'workshop' | 'bicycle'
   tint: string
 }
 
@@ -26,7 +26,7 @@ export interface CityDistrict {
 export const cityDistricts: CityDistrict[] = [
   {
     id: 'education', name: 'Kawasan Pendidikan', arabicName: 'مِنْطَقَةُ التَّعْلِيمِ', category: 'Pendidikan',
-    description: 'Jelajahi sekolah, ruang kelas, kantin, perpustakaan, dan berbagai fasilitas belajar.', color: '#70a97c', mapPoint: { x: 17, y: 29 },
+    description: 'Jelajahi sekolah, ruang kelas, kantin, perpustakaan, dan berbagai fasilitas belajar.', color: '#16A34A', mapPoint: { x: 17, y: 29 },
     areas: [
       { id: 'school-main', name: 'Gedung Sekolah', arabicName: 'الْمَدْرَسَةُ', description: 'Mengenal lingkungan sekolah dan kegiatan belajar.', lessonId: 'school', icon: 'school', tint: '#e7f3e5' },
       { id: 'classroom', name: 'Ruang Kelas', arabicName: 'الْفَصْلُ', description: 'Benda, kegiatan, dan interaksi di dalam kelas.', lessonId: 'classroom', icon: 'classroom', tint: '#fce8ef' },
@@ -38,16 +38,24 @@ export const cityDistricts: CityDistrict[] = [
   },
   {
     id: 'transport', name: 'Kawasan Transportasi', arabicName: 'مِنْطَقَةُ الْمُوَاصَلَاتِ', category: 'Transportasi',
-    description: 'Pelajari perjalanan, jadwal keberangkatan, tiket, dan petunjuk arah.', color: '#719fc4', mapPoint: { x: 51, y: 21 },
+    description: 'Pelajari perjalanan, jadwal keberangkatan, tiket, dan petunjuk arah.', color: '#2563EB', mapPoint: { x: 51, y: 21 },
     areas: [
       { id: 'airport', name: 'Bandara', arabicName: 'الْمَطَارُ', description: 'Check-in, ruang tunggu, dan keberangkatan pesawat.', lessonId: 'airport', icon: 'airport', tint: '#e9f2fa' },
       { id: 'station', name: 'Stasiun Kereta', arabicName: 'مَحَطَّةُ الْقِطَارِ', description: 'Membaca jadwal dan membeli tiket kereta.', lessonId: 'station', icon: 'train', tint: '#f0eafa' },
       { id: 'bus-terminal', name: 'Terminal Bus', arabicName: 'مَحَطَّةُ الْحَافِلَاتِ', description: 'Mencari bus, tujuan, dan jadwal perjalanan.', lessonId: 'bus-terminal', icon: 'bus', tint: '#fff0df' },
+      { id: 'taxi-stand', name: 'Pangkalan Taksi', arabicName: 'مَوْقِفُ سَيَّارَاتِ الْأُجْرَةِ', description: 'Bertanya ongkos, menyebut tujuan, dan berbicara dengan pengemudi.', lessonId: 'taxi-stand', icon: 'taxi', tint: '#BFDBFE' },
+      { id: 'bus-stop', name: 'Halte Bus', arabicName: 'مَوْقِفُ الْحَافِلَاتِ', description: 'Membaca nomor rute, jadwal, dan menunggu bus.', lessonId: 'bus-stop', icon: 'busstop', tint: '#99F6E4' },
+      { id: 'port', name: 'Pelabuhan', arabicName: 'الْمِينَاءُ', description: 'Mengenal kapal, dermaga, penumpang, dan kegiatan bongkar muat.', lessonId: 'port', icon: 'port', tint: '#BAE6FD' },
+      { id: 'parking', name: 'Tempat Parkir', arabicName: 'مَوْقِفُ السَّيَّارَاتِ', description: 'Mengenal area parkir dan aturan menempatkan kendaraan.', lessonId: 'parking', icon: 'parking', tint: '#CBD5E1' },
+      { id: 'fuel-station', name: 'SPBU', arabicName: 'مَحَطَّةُ الْوَقُودِ', description: 'Menyebut bahan bakar dan percakapan saat mengisi kendaraan.', lessonId: 'fuel-station', icon: 'fuel', tint: '#FDE68A' },
+      { id: 'bridge', name: 'Jalan dan Jembatan', arabicName: 'الطَّرِيقُ وَالْجِسْرُ', description: 'Mengenal jalan, jembatan, lampu lalu lintas, dan keselamatan.', lessonId: 'bridge', icon: 'bridge', tint: '#FED7AA' },
+      { id: 'workshop', name: 'Bengkel Kendaraan', arabicName: 'وَرْشَةُ السَّيَّارَاتِ', description: 'Menyebut bagian kendaraan dan percakapan perbaikan.', lessonId: 'workshop', icon: 'workshop', tint: '#FECACA' },
+      { id: 'bicycle-station', name: 'Stasiun Sepeda', arabicName: 'مَحَطَّةُ الدَّرَّاجَاتِ', description: 'Mempelajari penyewaan sepeda dan keselamatan berkendara.', lessonId: 'bicycle-station', icon: 'bicycle', tint: '#D9F99D' },
     ],
   },
   {
     id: 'health', name: 'Kawasan Kesehatan', arabicName: 'مِنْطَقَةُ الصِّحَّةِ', category: 'Layanan Publik',
-    description: 'Kenali layanan kesehatan, ruang pemeriksaan, dan cara menyampaikan keluhan.', color: '#d77f9d', mapPoint: { x: 82, y: 27 },
+    description: 'Kenali layanan kesehatan, ruang pemeriksaan, dan cara menyampaikan keluhan.', color: '#E11D48', mapPoint: { x: 82, y: 27 },
     areas: [
       { id: 'hospital', name: 'Rumah Sakit', arabicName: 'الْمُسْتَشْفَى', description: 'Pendaftaran pasien dan percakapan dengan tenaga kesehatan.', lessonId: 'hospital', icon: 'hospital', tint: '#fbeaf0' },
       { id: 'pharmacy', name: 'Apotek', arabicName: 'الصَّيْدَلِيَّةُ', description: 'Membeli obat dan memahami petunjuk penggunaan.', lessonId: 'pharmacy', icon: 'pharmacy', tint: '#e8f4ef' },
@@ -56,16 +64,25 @@ export const cityDistricts: CityDistrict[] = [
   },
   {
     id: 'home', name: 'Kawasan Permukiman', arabicName: 'الْحَيُّ السَّكَنِيُّ', category: 'Kehidupan Sehari-hari',
-    description: 'Bercerita tentang rumah, anggota keluarga, dan rutinitas di rumah.', color: '#c78d62', mapPoint: { x: 51, y: 69 },
+    description: 'Bercerita tentang rumah, anggota keluarga, dan rutinitas di rumah.', color: '#EA580C', mapPoint: { x: 51, y: 69 },
     areas: [
       { id: 'house', name: 'Rumah Keluarga', arabicName: 'الْبَيْتُ', description: 'Mendeskripsikan rumah dan anggota keluarga.', lessonId: 'home', icon: 'house', tint: '#fff0e4' },
       { id: 'living-room', name: 'Ruang Keluarga', arabicName: 'غُرْفَةُ الْجُلُوسِ', description: 'Kegiatan bersama keluarga di ruang keluarga.', lessonId: 'living-room', icon: 'living', tint: '#fbeaf0' },
       { id: 'kitchen', name: 'Dapur', arabicName: 'الْمَطْبَخُ', description: 'Peralatan dapur dan kegiatan menyiapkan makanan.', lessonId: 'kitchen', icon: 'kitchen', tint: '#fff3d9' },
+      { id: 'bedroom', name: 'Kamar Tidur', arabicName: 'غُرْفَةُ النَّوْمِ', description: 'Mengenal perabot kamar tidur dan rutinitas merapikan tempat istirahat.', lessonId: 'bedroom', icon: 'bedroom', tint: '#FED7AA' },
+      { id: 'bathroom', name: 'Kamar Mandi', arabicName: 'الْحَمَّامُ', description: 'Mempelajari perlengkapan mandi dan kebersihan diri.', lessonId: 'bathroom', icon: 'bathroom', tint: '#BAE6FD' },
+      { id: 'dining-room', name: 'Ruang Makan', arabicName: 'غُرْفَةُ الطَّعَامِ', description: 'Mengenal peralatan makan dan kebiasaan berkumpul.', lessonId: 'dining-room', icon: 'dining', tint: '#FDE68A' },
+      { id: 'study-room', name: 'Ruang Belajar', arabicName: 'غُرْفَةُ الدِّرَاسَةِ', description: 'Mempelajari benda belajar dan rutinitas menyiapkan tugas.', lessonId: 'study-room', icon: 'study', tint: '#DDD6FE' },
+      { id: 'garage', name: 'Garasi', arabicName: 'الْمَرْأَبُ', description: 'Mengenal kendaraan pribadi dan benda di garasi.', lessonId: 'garage', icon: 'garage', tint: '#CBD5E1' },
+      { id: 'garden', name: 'Taman Rumah', arabicName: 'حَدِيقَةُ الْمَنْزِلِ', description: 'Mempelajari tanaman dan kegiatan merawat lingkungan rumah.', lessonId: 'garden', icon: 'garden', tint: '#BBF7D0' },
+      { id: 'laundry-room', name: 'Ruang Cuci', arabicName: 'غُرْفَةُ الْغَسِيلِ', description: 'Mengenal perlengkapan mencuci dan merapikan pakaian.', lessonId: 'laundry-room', icon: 'laundry', tint: '#A5F3FC' },
+      { id: 'balcony', name: 'Balkon', arabicName: 'الشُّرْفَةُ', description: 'Mendeskripsikan balkon dan aktivitas santai di rumah.', lessonId: 'balcony', icon: 'balcony', tint: '#99F6E4' },
+      { id: 'hallway', name: 'Lorong Rumah', arabicName: 'مَمَرُّ الْبَيْتِ', description: 'Mengenal bagian penghubung antarruangan di rumah.', lessonId: 'hallway', icon: 'hallway', tint: '#E9D5FF' },
     ],
   },
   {
     id: 'commerce', name: 'Kawasan Perdagangan', arabicName: 'مِنْطَقَةُ التِّجَارَةِ', category: 'Perdagangan',
-    description: 'Berlatih bertanya harga, memilih barang, dan berkomunikasi saat berbelanja.', color: '#d6a64e', mapPoint: { x: 18, y: 72 },
+    description: 'Berlatih bertanya harga, memilih barang, dan berkomunikasi saat berbelanja.', color: '#D97706', mapPoint: { x: 18, y: 72 },
     areas: [
       { id: 'market', name: 'Pasar Tradisional', arabicName: 'السُّوقُ', description: 'Jual beli, tawar-menawar, dan nama bahan makanan.', lessonId: 'market', icon: 'market', tint: '#fff2d9' },
       { id: 'supermarket', name: 'Supermarket', arabicName: 'مَتْجَرٌ كَبِيرٌ', description: 'Mencari barang dan melakukan pembayaran.', lessonId: 'supermarket', icon: 'supermarket', tint: '#e8f2fb' },
@@ -74,7 +91,7 @@ export const cityDistricts: CityDistrict[] = [
   },
   {
     id: 'recreation', name: 'Kawasan Rekreasi', arabicName: 'مِنْطَقَةُ التَّرْفِيهِ', category: 'Rekreasi',
-    description: 'Mendeskripsikan tempat wisata, kegiatan luang, cuaca, dan lingkungan.', color: '#79a96d', mapPoint: { x: 82, y: 72 },
+    description: 'Mendeskripsikan tempat wisata, kegiatan luang, cuaca, dan lingkungan.', color: '#0D9488', mapPoint: { x: 82, y: 72 },
     areas: [
       { id: 'park', name: 'Taman Kota', arabicName: 'الْحَدِيقَةُ', description: 'Kegiatan rekreasi dan menjaga kebersihan taman.', lessonId: 'park', icon: 'park', tint: '#eaf4df' },
       { id: 'beach', name: 'Pantai', arabicName: 'الشَّاطِئُ', description: 'Cuaca, pemandangan laut, dan liburan.', lessonId: 'beach', icon: 'beach', tint: '#e6f3f8' },
@@ -86,7 +103,7 @@ const extraQuestion = (id: string, source: 'qiraah' | 'istima', prompt: string, 
 
 export const extraLessons: Lesson[] = [
   {
-    id: 'airport', name: 'Bandara', arabicName: 'الْمَطَارُ', category: 'Transportasi', description: 'Mengenal proses check-in, ruang tunggu, dan keberangkatan pesawat.', color: '#719fc4', orbitPosition: [0, 0, 0],
+    id: 'airport', name: 'Bandara', arabicName: 'الْمَطَارُ', category: 'Transportasi', description: 'Mengenal proses check-in, ruang tunggu, dan keberangkatan pesawat.', color: '#2563EB', orbitPosition: [0, 0, 0],
     smp: {
       reading: 'ذَهَبَتْ سَلْمَى مَعَ أُسْرَتِهَا إِلَى الْمَطَارِ فِي الصَّبَاحِ الْبَاكِرِ. كَانَتْ تُرِيدُ السَّفَرَ إِلَى مَدِينَةٍ أُخْرَى لِزِيَارَةِ جَدَّتِهَا. وَصَلُوا إِلَى الْمَطَارِ قَبْلَ مَوْعِدِ الرِّحْلَةِ بِسَاعَتَيْنِ. أَوَّلًا، ذَهَبُوا إِلَى مَكْتَبِ تَسْجِيلِ الْوُصُولِ، وَقَدَّمَتْ سَلْمَى جَوَازَ السَّفَرِ وَالْحَقِيبَةَ. بَعْدَ ذَلِكَ، أَخَذَتْ بِطَاقَةَ الصُّعُودِ إِلَى الطَّائِرَةِ. جَلَسَتِ الْأُسْرَةُ فِي صَالَةِ الِانْتِظَارِ، وَقَرَأَتْ سَلْمَى رَقْمَ الْبَوَّابَةِ عَلَى الشَّاشَةِ. عِنْدَمَا أُعْلِنَ عَنِ الرِّحْلَةِ، تَوَجَّهُوا إِلَى الْبَوَّابَةِ بِهُدُوءٍ.',
       translation: 'Salma pergi bersama keluarganya ke bandara pada pagi hari. Mereka akan bepergian ke kota lain untuk mengunjungi neneknya. Mereka tiba dua jam sebelum jadwal penerbangan. Pertama, mereka menuju meja check-in dan menyerahkan paspor serta koper. Setelah itu, Salma menerima kartu naik pesawat. Keluarga tersebut duduk di ruang tunggu, sementara Salma membaca nomor gerbang pada layar. Ketika penerbangan diumumkan, mereka berjalan menuju gerbang dengan tertib.',
@@ -103,7 +120,7 @@ export const extraLessons: Lesson[] = [
     quizSma: [extraQuestion('airport-a1', 'qiraah', 'لِمَاذَا وَصَلَتِ الْأُسْرَةُ مُبَكِّرًا؟', ['لِتَتَجَنَّبَ التَّأَخُّرَ', 'لِتَشْتَرِيَ الْمَلَابِسَ', 'لِتَزُورَ الْمَدِينَةَ'], 0, 'Mereka datang lebih awal agar tidak terlambat.'), extraQuestion('airport-a2', 'istima', 'مَاذَا يَقْرَأُ الْمُسَافِرُونَ عَلَى الشَّاشَةِ؟', ['مَعْلُومَاتِ الرِّحْلَةِ', 'أَسْمَاءَ الْمَطَاعِمِ', 'أَخْبَارَ الرِّيَاضَةِ'], 0, 'Audio menyebut informasi penerbangan pada layar.')],
   },
   {
-    id: 'bus-terminal', name: 'Terminal Bus', arabicName: 'مَحَطَّةُ الْحَافِلَاتِ', category: 'Transportasi', description: 'Mengenal tujuan, jadwal, dan layanan terminal bus.', color: '#d6a64e', orbitPosition: [0, 0, 0],
+    id: 'bus-terminal', name: 'Terminal Bus', arabicName: 'مَحَطَّةُ الْحَافِلَاتِ', category: 'Transportasi', description: 'Mengenal tujuan, jadwal, dan layanan terminal bus.', color: '#D97706', orbitPosition: [0, 0, 0],
     smp: {
       reading: 'ذَهَبَ يُوسُفُ مَعَ أَبِيهِ إِلَى مَحَطَّةِ الْحَافِلَاتِ لِلسَّفَرِ إِلَى قَرْيَةِ عَمِّهِ. وَقَفَا أَمَامَ لَوْحَةِ الْمَوَاعِيدِ وَبَحَثَا عَنْ اسْمِ الْقَرْيَةِ. سَأَلَ يُوسُفُ الْمُوَظَّفَ عَنْ رَقْمِ الْمَرْكَبَةِ وَمَوْعِدِ الْمُغَادَرَةِ. أَخْبَرَهُ الْمُوَظَّفُ أَنَّ الْحَافِلَةَ سَتَنْطَلِقُ بَعْدَ نِصْفِ سَاعَةٍ. اشْتَرَى الْأَبُ تَذْكِرَتَيْنِ، ثُمَّ وَضَعَا الْحَقَائِبَ فِي مَكَانِهَا. جَلَسَا فِي صَالَةِ الِانْتِظَارِ حَتَّى سَمِعَا النِّدَاءَ. عِنْدَمَا وَصَلَتِ الْحَافِلَةُ، صَعِدَ الرُّكَّابُ بِهُدُوءٍ وَاحْتَفَظُوا بِالتَّذَاكِرِ حَتَّى يَصِلُوا إِلَى الْوِجْهَةِ.',
       translation: 'Yusuf pergi bersama ayahnya ke terminal bus untuk bepergian ke desa pamannya. Mereka berdiri di depan papan jadwal dan mencari nama desa. Yusuf bertanya kepada petugas tentang nomor bus dan waktu keberangkatan. Petugas menjelaskan bahwa bus akan berangkat setengah jam lagi. Ayah membeli dua tiket, lalu mereka meletakkan koper di tempatnya. Mereka menunggu di ruang tunggu sampai mendengar pengumuman. Ketika bus tiba, para penumpang naik dengan tertib dan menyimpan tiket sampai tiba di tujuan.',
@@ -120,7 +137,7 @@ export const extraLessons: Lesson[] = [
     quizSma: [extraQuestion('terminal-a1', 'qiraah', 'لِمَاذَا قَرَأَ يُوسُفُ لَوْحَةَ الْمَوَاعِيدِ؟', ['لِيَعْرِفَ أَوْقَاتَ الْحَافِلَاتِ', 'لِيَعْرِفَ أَسْعَارَ الطَّعَامِ', 'لِيَبْحَثَ عَنْ كِتَابٍ'], 0, 'Papan jadwal berisi waktu keberangkatan dan tujuan.'), extraQuestion('terminal-a2', 'istima', 'عَمَّ يَسْأَلُ يُوسُفُ الْمُوَظَّفَ؟', ['عَنْ رَقْمِ الرَّصِيفِ', 'عَنْ لَوْنِ الْحَافِلَةِ', 'عَنْ مَكَانِ الْمَطْعَمِ'], 0, 'Audio menyebut Yusuf bertanya tentang peron.')],
   },
   {
-    id: 'pharmacy', name: 'Apotek', arabicName: 'الصَّيْدَلِيَّةُ', category: 'Layanan Publik', description: 'Mengenal layanan apotek dan petunjuk penggunaan obat.', color: '#70a97c', orbitPosition: [0, 0, 0],
+    id: 'pharmacy', name: 'Apotek', arabicName: 'الصَّيْدَلِيَّةُ', category: 'Layanan Publik', description: 'Mengenal layanan apotek dan petunjuk penggunaan obat.', color: '#16A34A', orbitPosition: [0, 0, 0],
     smp: {
       reading: 'ذَهَبَتْ مَرْيَمُ مَعَ أُمِّهَا إِلَى الصَّيْدَلِيَّةِ بَعْدَ زِيَارَةِ الطَّبِيبِ. كَانَتْ أُمُّهَا تَحْمِلُ وَصْفَةً طِبِّيَّةً فِيهَا اسْمُ الدَّوَاءِ وَطَرِيقَةُ اسْتِعْمَالِهِ. قَدَّمَتِ الْوَصْفَةَ إِلَى الصَّيْدَلِيِّ، فَبَحَثَ عَنِ الدَّوَاءِ فِي الرَّفِّ. ثُمَّ شَرَحَ لَهُمَا وَقْتَ تَنَاوُلِ الدَّوَاءِ وَعَدَدَ الْمَرَّاتِ فِي الْيَوْمِ. اسْتَمَعَتْ مَرْيَمُ بِانْتِبَاهٍ وَقَرَأَتِ التَّعْلِيمَاتِ الْمَكْتُوبَةَ عَلَى الْعُلْبَةِ. قَبْلَ الْخُرُوجِ، شَكَرَتِ الصَّيْدَلِيَّ وَوَضَعَتِ الدَّوَاءَ فِي حَقِيبَتِهَا.',
       translation: 'Maryam pergi bersama ibunya ke apotek setelah mengunjungi dokter. Ibunya membawa resep yang berisi nama obat dan cara penggunaannya. Ia menyerahkan resep kepada apoteker, lalu apoteker mencari obat di rak. Setelah itu, apoteker menjelaskan waktu minum obat dan jumlah penggunaannya dalam sehari. Maryam mendengarkan dengan saksama dan membaca petunjuk pada kemasan. Sebelum keluar, ia berterima kasih kepada apoteker dan menyimpan obat di tas.',
@@ -137,7 +154,7 @@ export const extraLessons: Lesson[] = [
     quizSma: [extraQuestion('pharmacy-a1', 'qiraah', 'مَا الْفَائِدَةُ مِنْ قِرَاءَةِ التَّعْلِيمَاتِ؟', ['لِاسْتِعْمَالِ الدَّوَاءِ بِطَرِيقَةٍ صَحِيحَةٍ', 'لِتَغْيِيرِ اسْمِ الدَّوَاءِ', 'لِبَيْعِ الدَّوَاءِ'], 0, 'Petunjuk membantu pasien menggunakan obat dengan benar.'), extraQuestion('pharmacy-a2', 'istima', 'عَمَّ يَشْرَحُ الصَّيْدَلِيُّ؟', ['وَقْتَ تَنَاوُلِ الدَّوَاءِ وَطَرِيقَةَ حِفْظِهِ', 'مَوَاعِيدَ الْحَافِلَاتِ', 'أَسْعَارَ الْكُتُبِ'], 0, 'Audio berisi penjelasan waktu minum dan penyimpanan obat.')],
   },
   {
-    id: 'clinic', name: 'Klinik', arabicName: 'الْعِيَادَةُ', category: 'Layanan Publik', description: 'Menyampaikan keluhan dan memahami alur pemeriksaan di klinik.', color: '#d77f9d', orbitPosition: [0, 0, 0],
+    id: 'clinic', name: 'Klinik', arabicName: 'الْعِيَادَةُ', category: 'Layanan Publik', description: 'Menyampaikan keluhan dan memahami alur pemeriksaan di klinik.', color: '#E11D48', orbitPosition: [0, 0, 0],
     smp: {
       reading: 'شَعَرَ خَالِدٌ بِالصُّدَاعِ وَالتَّعَبِ، فَذَهَبَ مَعَ أَبِيهِ إِلَى الْعِيَادَةِ. اسْتَقْبَلَتْهُمَا الْمُمَرِّضَةُ فِي مَكْتَبِ الِاسْتِقْبَالِ وَسَأَلَتْ عَنْ اسْمِهِ وَعُمْرِهِ. بَعْدَ تَسْجِيلِ الْبَيَانَاتِ، جَلَسَ خَالِدٌ فِي غُرْفَةِ الِانْتِظَارِ. نَادَى الطَّبِيبُ اسْمَهُ، فَدَخَلَ مَعَ أَبِيهِ إِلَى غُرْفَةِ الْفَحْصِ. سَأَلَهُ الطَّبِيبُ عَنْ مَوْضِعِ الْأَلَمِ وَمُدَّتِهِ، ثُمَّ قَاسَ دَرَجَةَ حَرَارَتِهِ. أَجَابَ خَالِدٌ عَنِ الْأَسْئِلَةِ بِوُضُوحٍ وَاسْتَمَعَ إِلَى نَصِيحَةِ الطَّبِيبِ. بَعْدَ الْفَحْصِ، شَكَرَ الطَّبِيبَ وَعَادَ إِلَى الْبَيْتِ مَعَ أَبِيهِ.',
       translation: 'Khalid merasa sakit kepala dan lelah, sehingga ia pergi bersama ayahnya ke klinik. Perawat menyambut mereka di bagian pendaftaran dan menanyakan nama serta usia Khalid. Setelah data dicatat, Khalid duduk di ruang tunggu. Dokter memanggil namanya dan ia masuk bersama ayahnya ke ruang pemeriksaan. Dokter bertanya tentang letak dan lama rasa sakit, kemudian mengukur suhu tubuhnya. Khalid menjawab dengan jelas dan mendengarkan nasihat dokter. Setelah pemeriksaan, ia berterima kasih dan pulang bersama ayahnya.',
